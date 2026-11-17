@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Một chút bất ngờ dành riêng cho cô Tuyết 🎁</title>
+    <style>
+        /* =========================================
+           PHẦN 1: RESET VÀ CÀI ĐẶT CƠ BẢN
+           ========================================= */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body {
+            height: 100%; width: 100%; overflow: hidden;
+            font-family: 'Segoe UI', 'Arial', sans-serif;
+            cursor: default; user-select: none; -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+        }
+        body {
+            background: linear-gradient(to bottom, #0f0518 0%, #2a103b 30%, #5c234b 60%, #a33f60 85%, #d9667b 100%);
+            display: flex; justify-content: center; align-items: center; position: relative;
+        }
+        .bg-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.6) 100%);
+            pointer-events: none; z-index: 1;
+        }
+        .cloud {
+            position: fixed; background: rgba(255, 255, 255, 0.06);
+            border-radius: 50px; pointer-events: none; z-index: 2;
+            filter: blur(15px); animation: cloudMove linear infinite;
+        }
+        .cloud::before, .cloud::after { content: ''; position: absolute; background: inherit; border-radius: 50%; }
+        .cloud::before { width: 50%; height: 150%; top: -50%; left: 10%; }
+        .cloud::after { width: 60%; height: 120%; top: -30%; right: 10%; }
+        @keyframes cloudMove { 0% { transform: translateX(-30vw); } 100% { transform: translateX(130vw); } }
+        .star {
+            position: fixed; width: 3px; height: 3px; background: #ffffff;
+            border-radius: 50%; pointer-events: none; z-index: 3;
+            animation: twinkle 4s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.1; transform: scale(0.5); }
+            100% { opacity: 1; transform: scale(1.5); box-shadow: 0 0 15px #ffffff; }
+        }
+        .hill {
+            position: fixed; bottom: -80px; width: 140%; height: 300px;
+            background: radial-gradient(ellipse at 50% 100%, #1e3b1a 0%, #0d1f0b 80%);
+            border-radius: 50% 50% 0 0; left: -20%; pointer-events: none;
+            z-index: 4; box-shadow: 0 -30px 80px rgba(0, 0, 0, 0.8);
+        }
+        .hill-front {
+            position: fixed; bottom: -100px; width: 120%; height: 220px;
+            background: #081206; border-radius: 50% 50% 0 0; left: -10%;
+            pointer-events: none; z-index: 5;
+        }
+        .firefly {
+            position: fixed; width: 5px; height: 5px; background: #ffe66d;
+            border-radius: 50%; pointer-events: none; z-index: 6;
+            box-shadow: 0 0 12px #ffe66d, 0 0 24px #ffc107;
+            animation: fly linear infinite;
+        }
+        @keyframes fly {
+            0% { transform: translate(0, 0) scale(0.2); opacity: 0; }
+            15% { opacity: 1; } 85% { opacity: 1; }
+            100% { transform: translate(var(--mx), var(--my)) scale(1.2); opacity: 0; }
+        }
+        .balloon {
+            position: fixed; bottom: -150px; width: 60px; height: 80px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            pointer-events: none; z-index: 7; animation: balloonUp linear forwards;
+            box-shadow: inset -15px -15px 25px rgba(0, 0, 0, 0.3), inset 10px 10px 20px rgba(255, 255, 255, 0.4);
+        }
+        .balloon::after {
+            content: ''; position: absolute; bottom: -50px; left: 50%;
+            width: 1.5px; height: 50px; background: rgba(255, 255, 255, 0.4);
+            transform: translateX(-50%);
+        }
+        @keyframes balloonUp {
+            0% { transform: translateY(0) rotate(-8deg); opacity: 0; }
+            10% { opacity: 0.9; }
+            100% { transform: translateY(-130vh) rotate(20deg); opacity: 0; }
+        }
+        .flower-1 {
+            position: fixed; top: -60px; pointer-events: none; z-index: 8;
+            animation: fall1 linear infinite; filter: drop-shadow(0 0 8px rgba(255, 150, 200, 0.9));
+        }
+        .flower-2 {
+            position: fixed; top: -60px; pointer-events: none; z-index: 6;
+            animation: fall2 linear infinite; opacity: 0.5; filter: blur(2px);
+        }
+        @keyframes fall1 {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            100% { transform: translateY(110vh) rotate(540deg) translateX(100px); opacity: 0; }
+        }
+        @keyframes fall2 {
+            0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 0; }
+            10% { opacity: 0.8; }
+            100% { transform: translateY(110vh) rotate(-540deg) translateX(-100px); opacity: 0; }
+        }
+        .shooting-star {
+            position: fixed; top: -50px; left: -50px; width: 150px; height: 2px;
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0), #ffffff, rgba(255, 255, 255, 0));
+            transform: rotate(-45deg); pointer-events: none; z-index: 3;
+            animation: shoot 1.5s linear forwards; filter: drop-shadow(0 0 10px #ffffff);
+        }
+        @keyframes shoot {
+            0% { transform: translate(0, 0) rotate(-45deg); opacity: 1; }
+            100% { transform: translate(150vw, 150vh) rotate(-45deg); opacity: 0; }
+        }
+        #fireworks-canvas {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none; z-index: 9;
+        }
+        .screen {
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            transition: opacity 1s ease, transform 1s ease; padding: 20px;
+            z-index: 15; cursor: pointer;
+        }
+        .screen.hide { opacity: 0; transform: scale(0.8) translateY(-50px); pointer-events: none; }
+        #screen2 { opacity: 0; pointer-events: none; }
+        #screen2.show { opacity: 1; pointer-events: auto; }
+        @keyframes ledGlow {
+            0% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000; color: #ff8fb1; }
+            25% { text-shadow: 0 0 10px #00ff00, 0 0 20px #00ff00, 0 0 30px #00ff00; color: #b3ffb3; }
+            50% { text-shadow: 0 0 10px #0000ff, 0 0 20px #0000ff, 0 0 30px #0000ff; color: #b3b3ff; }
+            75% { text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff, 0 0 30px #ff00ff; color: #ffb3ff; }
+            100% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 30px #ff0000; color: #ff8fb1; }
+        }
+        .title-gift {
+            font-size: 50px; font-weight: 900; margin-bottom: 30px; letter-spacing: 2px;
+            text-align: center; font-family: 'Georgia', serif;
+            animation: ledGlow 4s linear infinite, floatTitle 4s ease-in-out infinite;
+            z-index: 20; pointer-events: none;
+        }
+        .title-led-small {
+            font-size: 30px; font-weight: 900; margin-bottom: 20px; letter-spacing: 1px;
+            text-align: center; font-family: 'Segoe UI', sans-serif;
+            animation: ledGlow 3s linear infinite; z-index: 20;
+        }
+        @keyframes floatTitle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        .characters {
+            display: flex; gap: 50px; margin-bottom: 40px;
+            perspective: 1000px; pointer-events: none;
+        }
+        .char {
+            width: 130px; height: 150px; position: relative;
+            animation: charBounce 2.5s ease-in-out infinite; transition: transform 0.3s;
+            z-index: 20; filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+        }
+        .char:nth-child(2) { animation-delay: 0.4s; }
+        @keyframes charBounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .gift-wrapper { perspective: 1000px; z-index: 20; margin-top: 20px; pointer-events: none; }
+        .gift-box {
+            width: 280px; height: 280px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 240, 245, 0.95));
+            border-radius: 35px; display: flex; justify-content: center; align-items: center;
+            position: relative; box-shadow: 0 0 60px rgba(255, 143, 177, 0.7);
+            animation: giftFloat 4s ease-in-out infinite, giftShake 3s infinite;
+            backdrop-filter: blur(10px); border: 3px solid rgba(255, 255, 255, 0.9);
+        }
+        @keyframes giftFloat {
+            0%, 100% { transform: translateY(0) rotateY(0deg); }
+            50% { transform: translateY(-20px) rotateY(8deg); }
+        }
+        @keyframes giftShake {
+            0%, 85%, 100% { transform: rotate(0deg); }
+            88%, 92% { transform: rotate(-5deg); }
+            90%, 94% { transform: rotate(5deg); }
+        }
+        .gift-box::before {
+            content: ''; position: absolute; top: -10px; left: -10px; right: -10px; bottom: -10px;
+            border-radius: 45px; background: conic-gradient(from 0deg, #ff5c8a, #ffd93d, #c4b5fd, #4ade80, #ff5c8a);
+            z-index: -1; animation: rotateBorder 4s linear infinite; filter: blur(15px); opacity: 0.8;
+        }
+        @keyframes rotateBorder { to { transform: rotate(360deg); } }
+        .gift-box svg { width: 200px; height: 200px; animation: bunnyWiggle 3s infinite; }
+        @keyframes bunnyWiggle {
+            0%, 100% { transform: rotate(-5deg) scale(1); }
+            50% { transform: rotate(5deg) scale(1.05); }
+        }
+        .tap-hint {
+            margin-top: 30px; font-size: 18px; font-weight: 800; letter-spacing: 2px;
+            text-transform: uppercase; z-index: 20;
+            animation: ledGlow 2s linear infinite, pulseHint 1.5s infinite; pointer-events: none;
+        }
+        @keyframes pulseHint {
+            0%, 100% { opacity: 0.8; transform: scale(0.95); }
+            50% { opacity: 1; transform: scale(1.08); }
+        }
+        .popup-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 5, 20, 0.9); display: flex; justify-content: center; align-items: center;
+            z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.8s ease;
+            padding: 20px; backdrop-filter: blur(12px);
+        }
+        .popup-overlay.show { opacity: 1; pointer-events: auto; }
+        .popup {
+            background: #fff9f0; padding: 45px 40px; border-radius: 15px; max-width: 550px; width: 100%;
+            text-align: center; position: relative; transform: translateY(80px) scale(0.7);
+            transition: transform 0.9s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.6); font-family: 'Georgia', serif; overflow: hidden;
+        }
+        .popup-overlay.show .popup { transform: translateY(0) scale(1); }
+        .popup::before {
+            content: ''; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px;
+            border: 2px dashed #e75480; border-radius: 8px; pointer-events: none; opacity: 0.6;
+        }
+        .popup-subtitle {
+            font-size: 16px; color: #8a5a6a; font-style: italic; margin-bottom: 30px;
+            font-weight: bold; animation: ledGlow 3s linear infinite;
+        }
+        .typing-area {
+            font-size: 17px; color: #4a3a40; line-height: 2; margin-bottom: 18px;
+            text-align: justify; min-height: 130px; position: relative;
+        }
+        .cursor {
+            display: inline-block; width: 2px; height: 18px; background: #d6336c;
+            vertical-align: middle; margin-left: 2px; animation: blink 0.8s infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+        .popup-close {
+            margin-top: 35px; padding: 15px 45px; background: #d6336c; color: #ffffff;
+            border: 2px solid #fff; border-radius: 50px; font-size: 17px; font-weight: bold;
+            cursor: pointer; font-family: 'Segoe UI', sans-serif;
+            animation: ledGlow 2s linear infinite; transition: 0.3s;
+        }
+        .popup-close:hover { transform: scale(1.08) translateY(-3px); }
+
+        /* ===== FOOTER 2 DÒNG, CHỮ NHỎ ===== */
+        .signature {
+            position: fixed;
+            bottom: 15px;
+            left: 25px;
+            font-size: 12px;
+            font-weight: bold;
+            font-style: italic;
+            z-index: 25;
+            font-family: 'Georgia', serif;
+            letter-spacing: 1px;
+            animation: ledGlow 3s linear infinite;
+            pointer-events: none;
+            line-height: 1.7;
+            text-align: left;
+        }
+
+        .bouquet-wrap {
+            width: 320px; animation: floatTitle 4s infinite;
+            filter: drop-shadow(0 20px 40px rgba(255, 100, 150, 0.5));
+            cursor: pointer; transition: transform 0.3s;
+        }
+        .bouquet-wrap:hover { transform: scale(1.05); }
+        .butterfly {
+            position: fixed; font-size: 24px; pointer-events: none; z-index: 10;
+            animation: flyButterfly linear infinite;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
+        }
+        @keyframes flyButterfly {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            50% { transform: translate(50vw, -30vh) rotate(180deg); }
+            90% { opacity: 1; }
+            100% { transform: translate(100vw, -10vh) rotate(360deg); opacity: 0; }
+        }
+        .confetti {
+            position: fixed; width: 10px; height: 10px; pointer-events: none;
+            z-index: 11; animation: confettiFall linear forwards;
+        }
+        @keyframes confettiFall {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== ẢNH CÔ GIÁO ===== */
+        .teacher-photos {
+            display: flex; gap: 25px; margin-bottom: 30px;
+            justify-content: center; align-items: center;
+            perspective: 1000px; pointer-events: none; z-index: 20;
+        }
+        .teacher-photos .photo-frame {
+            border-radius: 20px; overflow: hidden;
+            border: 4px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s ease;
+        }
+        .teacher-photos .photo-frame:nth-child(1) { transform: rotate(-4deg); }
+        .teacher-photos .photo-frame:nth-child(2) { transform: rotate(4deg) translateY(-10px); }
+        .teacher-photos img {
+            width: 160px; height: 210px; object-fit: cover; display: block;
+        }
+
+        @media (max-width: 600px) {
+            .title-gift { font-size: 32px; margin-bottom: 20px; }
+            .title-led-small { font-size: 24px; }
+            .gift-box { width: 220px; height: 220px; }
+            .gift-box svg { width: 150px; height: 150px; }
+            .char { width: 90px; height: 110px; }
+            .characters { gap: 20px; margin-bottom: 20px; }
+            .popup { padding: 30px 20px; }
+            .typing-area { font-size: 15px; line-height: 1.8; }
+            .bouquet-wrap { width: 260px; }
+            .teacher-photos img { width: 110px; height: 150px; }
+            .teacher-photos { gap: 15px; margin-bottom: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-overlay"></div>
+    <div class="hill"></div>
+    <div class="hill-front"></div>
+    <canvas id="fireworks-canvas"></canvas>
+
+    <div class="screen" id="screen1">
+        <div class="title-gift">Chúc Mừng Ngày 20/11 💐</div>
+
+        <!-- ===== ẢNH CÔ GIÁO - ĐÃ ĐỔI VỀ ĐƯỜNG DẪN TƯƠNG ĐỐI ===== -->
+        <div class="teacher-photos">
+            <div class="photo-frame">
+                <img src="anh1.jpg" alt="Cô giáo">
+            </div>
+            <div class="photo-frame">
+                <img src="anh2.jpg" alt="Cô giáo">
+            </div>
+        </div>
+
+        <div class="characters">
+            <div class="char" id="bunny">
+                <svg viewBox="0 0 100 120" fill="none">
+                    <path d="M30 40 Q20 10 35 5 Q50 5 45 40" stroke="#1a1a1a" stroke-width="3" fill="#fff" stroke-linecap="round"/>
+                    <path d="M70 40 Q80 10 65 5 Q50 5 55 40" stroke="#1a1a1a" stroke-width="3" fill="#fff" stroke-linecap="round"/>
+                    <circle cx="50" cy="65" r="30" fill="#fff" stroke="#1a1a1a" stroke-width="3"/>
+                    <circle cx="40" cy="60" r="3" fill="#1a1a1a"/>
+                    <circle cx="60" cy="60" r="3" fill="#1a1a1a"/>
+                    <ellipse cx="30" cy="70" rx="6" ry="4" fill="#ffb3c6"/>
+                    <ellipse cx="70" cy="70" rx="6" ry="4" fill="#ffb3c6"/>
+                    <path d="M45 70 Q50 75 55 70" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <path d="M25 90 L20 110 L50 105 L80 110 L75 90" fill="#ff8fb1" stroke="#1a1a1a" stroke-width="3"/>
+                </svg>
+            </div>
+            <div class="char" id="bear">
+                <svg viewBox="0 0 100 120" fill="none">
+                    <circle cx="25" cy="35" r="15" fill="#d4a373" stroke="#1a1a1a" stroke-width="3"/>
+                    <circle cx="75" cy="35" r="15" fill="#d4a373" stroke="#1a1a1a" stroke-width="3"/>
+                    <circle cx="50" cy="65" r="35" fill="#d4a373" stroke="#1a1a1a" stroke-width="3"/>
+                    <ellipse cx="50" cy="75" rx="15" ry="10" fill="#faedcd"/>
+                    <circle cx="38" cy="60" r="4" fill="#1a1a1a"/>
+                    <circle cx="62" cy="60" r="4" fill="#1a1a1a"/>
+                    <ellipse cx="50" cy="70" rx="4" ry="3" fill="#1a1a1a"/>
+                    <path d="M45 78 Q50 85 55 78" stroke="#1a1a1a" stroke-width="2" fill="none" stroke-linecap="round"/>
+                    <path d="M20 95 L15 115 L50 110 L85 115 L80 95" fill="#ffd93d" stroke="#1a1a1a" stroke-width="3"/>
+                </svg>
+            </div>
+        </div>
+
+        <div class="gift-wrapper">
+            <div class="gift-box" id="giftBox">
+                <svg viewBox="0 0 200 200" fill="none">
+                    <rect x="40" y="90" width="120" height="80" rx="5" fill="#ff6b9d" stroke="#c2255c" stroke-width="4"/>
+                    <rect x="30" y="70" width="140" height="30" rx="5" fill="#ff8fb1" stroke="#c2255c" stroke-width="4"/>
+                    <path d="M100 70 V170" stroke="#c2255c" stroke-width="4"/>
+                    <path d="M100 70 Q70 40 70 70 Q70 80 100 70" fill="#ffd93d" stroke="#c2255c" stroke-width="3"/>
+                    <path d="M100 70 Q130 40 130 70 Q130 80 100 70" fill="#ffd93d" stroke="#c2255c" stroke-width="3"/>
+                </svg>
+            </div>
+        </div>
+        <div class="tap-hint">✦Cô Bấm vào đâu cũng được ✦</div>
+    </div>
+
+    <div class="screen hide" id="screen2">
+        <div class="title-led-small">Cô bấm vào đây nhé👇</div>
+        <div class="bouquet-wrap" id="bouquetBtn">
+            <svg viewBox="0 0 300 380">
+                <line x1="150" y1="240" x2="150" y2="80" stroke="#4ade80" stroke-width="6"/>
+                <path d="M125 90 Q110 40 150 30 Q190 40 175 90 Q150 70 125 90 Z" fill="#ff8fb1" stroke="#c2255c" stroke-width="2"/>
+                <path d="M90 150 Q70 100 110 90 Q140 100 130 150 Q110 130 90 150 Z" fill="#ffb3c6" stroke="#c2255c" stroke-width="2"/>
+                <path d="M170 140 Q150 90 190 80 Q220 90 210 140 Q190 120 170 140 Z" fill="#ffb3c6" stroke="#c2255c" stroke-width="2"/>
+                <path d="M130 230 Q100 190 120 170 Q140 190 140 220 Z" fill="#4ade80"/>
+                <path d="M170 230 Q200 190 180 170 Q160 190 160 220 Z" fill="#4ade80"/>
+                <path d="M60 200 Q40 280 80 340 L220 340 Q260 280 240 200 Q150 230 60 200 Z" fill="#ffe4ec" stroke="#ff8fb1" stroke-width="3"/>
+                <path d="M120 310 Q150 300 180 310 L190 340 Q150 360 110 340 Z" fill="#ff5c8a"/>
+            </svg>
+        </div>
+    </div>
+
+    <div class="popup-overlay" id="popupOverlay">
+        <div class="popup">
+            <div class="popup-subtitle">— Nhân ngày 20/11 —</div>
+            <div class="typing-area" id="typingArea"></div>
+            <button class="popup-close" id="closeBtn">Đóng lại</button>
+        </div>
+    </div>
+
+    <!-- ===== FOOTER 2 DÒNG, CHỮ NHỎ ===== -->
+    <div class="signature">
+        Code and Animations by Nghĩa<br>
+        Design by Khải
+    </div>
+
+<script>
+    for (let i = 0; i < 8; i++) {
+        const cloud = document.createElement('div');
+        cloud.className = 'cloud';
+        const w = 150 + Math.random() * 250;
+        cloud.style.width = w + 'px';
+        cloud.style.height = (w * 0.4) + 'px';
+        cloud.style.top = Math.random() * 60 + 'vh';
+        cloud.style.animationDuration = (40 + Math.random() * 50) + 's';
+        cloud.style.animationDelay = (Math.random() * -40) + 's';
+        document.body.appendChild(cloud);
+    }
+    for (let i = 0; i < 120; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + 'vw';
+        star.style.top = Math.random() * 80 + 'vh';
+        star.style.animationDelay = (Math.random() * 4) + 's';
+        star.style.animationDuration = (2 + Math.random() * 3) + 's';
+        document.body.appendChild(star);
+    }
+    setInterval(() => {
+        if (Math.random() > 0.7) {
+            const s = document.createElement('div');
+            s.className = 'shooting-star';
+            s.style.left = (Math.random() * 50) + 'vw';
+            s.style.top = (Math.random() * 30) + 'vh';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 2000);
+        }
+    }, 4000);
+    setInterval(() => {
+        const ff = document.createElement('div');
+        ff.className = 'firefly';
+        const startX = Math.random() * window.innerWidth;
+        const startY = window.innerHeight * 0.5 + Math.random() * window.innerHeight * 0.5;
+        ff.style.left = startX + 'px';
+        ff.style.top = startY + 'px';
+        ff.style.setProperty('--mx', (Math.random() * 300 - 150) + 'px');
+        ff.style.setProperty('--my', (-150 - Math.random() * 250) + 'px');
+        ff.style.animationDuration = (4 + Math.random() * 4) + 's';
+        document.body.appendChild(ff);
+        setTimeout(() => ff.remove(), 8000);
+    }, 400);
+    const balloonColors = ['#ff8fb1', '#ffd93d', '#6bcbff', '#c4b5fd', '#4ade80', '#ff6b9d', '#ffb3c6'];
+    setInterval(() => {
+        const b = document.createElement('div');
+        b.className = 'balloon';
+        b.style.left = (5 + Math.random() * 90) + 'vw';
+        b.style.background = balloonColors[Math.floor(Math.random() * balloonColors.length)];
+        const dur = 10 + Math.random() * 8;
+        b.style.animationDuration = dur + 's';
+        b.style.transform = `scale(${0.6 + Math.random() * 0.8})`;
+        document.body.appendChild(b);
+        setTimeout(() => b.remove(), dur * 1000);
+    }, 1500);
+    const flowers = ['🌸', '🌺', '🌷', '💮', '🏵️', '🌹', '💐', '🎀', '🌼'];
+    setInterval(() => {
+        if (Math.random() > 0.4) {
+            const f1 = document.createElement('div');
+            f1.className = 'flower-1';
+            f1.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            f1.style.left = Math.random() * 100 + 'vw';
+            f1.style.fontSize = (25 + Math.random() * 20) + 'px';
+            const dur1 = 5 + Math.random() * 4;
+            f1.style.animationDuration = dur1 + 's';
+            document.body.appendChild(f1);
+            setTimeout(() => f1.remove(), dur1 * 1000);
+        }
+        if (Math.random() > 0.4) {
+            const f2 = document.createElement('div');
+            f2.className = 'flower-2';
+            f2.textContent = flowers[Math.floor(Math.random() * flowers.length)];
+            f2.style.left = Math.random() * 100 + 'vw';
+            f2.style.fontSize = (10 + Math.random() * 12) + 'px';
+            const dur2 = 8 + Math.random() * 6;
+            f2.style.animationDuration = dur2 + 's';
+            document.body.appendChild(f2);
+            setTimeout(() => f2.remove(), dur2 * 1000);
+        }
+    }, 300);
+    setInterval(() => {
+        if (Math.random() > 0.8) {
+            const b = document.createElement('div');
+            b.className = 'butterfly';
+            b.textContent = ['🦋', '🦋', '🦋', '🧚‍♀️'][Math.floor(Math.random()*4)];
+            b.style.left = '-50px';
+            b.style.top = (Math.random() * 80 + 10) + 'vh';
+            b.style.animationDuration = (8 + Math.random() * 6) + 's';
+            document.body.appendChild(b);
+            setTimeout(() => b.remove(), 15000);
+        }
+    }, 2000);
+
+    const canvas = document.getElementById('fireworks-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H;
+    function resizeCanvas() {
+        W = canvas.width = window.innerWidth;
+        H = canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+    const fireworks = [];
+    const particles = [];
+    const hues = [340, 350, 20, 40, 320, 280, 200, 180];
+    class Firework {
+        constructor(x, y) {
+            this.x = x; this.y = y; this.vy = -10 - Math.random() * 4;
+            this.color = `hsl(${hues[Math.floor(Math.random() * hues.length)]}, 100%, 65%)`;
+            this.exploded = false;
+        }
+        update() {
+            if (!this.exploded) {
+                this.y += this.vy; this.vy += 0.18;
+                if (this.vy >= 0) { this.explode(); this.exploded = true; }
+            }
+        }
+        explode() {
+            const count = 100 + Math.random() * 50;
+            for (let i = 0; i < count; i++) {
+                const angle = (Math.PI * 2 * i) / count + Math.random() * 0.1;
+                const speed = 2 + Math.random() * 7;
+                particles.push(new Particle(this.x, this.y, Math.cos(angle) * speed, Math.sin(angle) * speed, this.color, 1 + Math.random()));
+            }
+        }
+        draw() {
+            if (!this.exploded) {
+                ctx.beginPath(); ctx.arc(this.x, this.y, 4, 0, Math.PI * 2);
+                ctx.fillStyle = this.color; ctx.shadowBlur = 20; ctx.shadowColor = this.color;
+                ctx.fill(); ctx.shadowBlur = 0;
+            }
+        }
+    }
+    class Particle {
+        constructor(x, y, vx, vy, color, life) {
+            this.x = x; this.y = y; this.vx = vx; this.vy = vy;
+            this.color = color; this.life = life; this.maxLife = life;
+        }
+        update() {
+            this.x += this.vx; this.y += this.vy; this.vy += 0.08;
+            this.vx *= 0.98; this.vy *= 0.98; this.life -= 0.015;
+        }
+        draw() {
+            const alpha = Math.max(0, this.life / this.maxLife);
+            ctx.globalAlpha = alpha;
+            ctx.beginPath(); ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+            ctx.fillStyle = this.color; ctx.shadowBlur = 15; ctx.shadowColor = this.color;
+            ctx.fill(); ctx.shadowBlur = 0; ctx.globalAlpha = 1;
+        }
+    }
+    function animateFW() {
+        ctx.clearRect(0, 0, W, H);
+        for (let i = fireworks.length - 1; i >= 0; i--) {
+            fireworks[i].update(); fireworks[i].draw();
+            if (fireworks[i].exploded) fireworks.splice(i, 1);
+        }
+        for (let i = particles.length - 1; i >= 0; i--) {
+            particles[i].update(); particles[i].draw();
+            if (particles[i].life <= 0) particles.splice(i, 1);
+        }
+        requestAnimationFrame(animateFW);
+    }
+    animateFW();
+    function launchFirework(x, y) {
+        fireworks.push(new Firework(x || Math.random() * W, y || H));
+    }
+    setInterval(() => { if (Math.random() > 0.4) launchFirework(); }, 2000);
+    document.addEventListener('click', (e) => {
+        if (e.target.tagName !== 'BUTTON' && !e.target.closest('.popup')) {
+            launchFirework(e.clientX, H);
+        }
+    });
+    function launchConfetti() {
+        const colors = ['#ff8fb1', '#ffd93d', '#6bcbff', '#4ade80', '#c4b5fd', '#ff5c8a'];
+        for (let i = 0; i < 80; i++) {
+            setTimeout(() => {
+                const c = document.createElement('div');
+                c.className = 'confetti';
+                c.style.left = Math.random() * 100 + 'vw';
+                c.style.top = '-20px';
+                c.style.background = colors[Math.floor(Math.random() * colors.length)];
+                c.style.width = (5 + Math.random() * 10) + 'px';
+                c.style.height = (5 + Math.random() * 10) + 'px';
+                c.style.animationDuration = (3 + Math.random() * 3) + 's';
+                document.body.appendChild(c);
+                setTimeout(() => c.remove(), 6000);
+            }, i * 30);
+        }
+    }
+
+    const textToType = "Nhân ngày 20/11 em và bạn Khải xin chúc cô Tuyết 20/11 luôn vui vẻ và luôn tràn đầy sức sống ạ. Cảm ơn cô đã đọc 😘";
+    let typeIndex = 0;
+    const typingArea = document.getElementById('typingArea');
+    const cursorEl = document.createElement('span');
+    cursorEl.className = 'cursor';
+    typingArea.appendChild(cursorEl);
+    function typeLetter() {
+        if (typeIndex < textToType.length) {
+            cursorEl.before(document.createTextNode(textToType.charAt(typeIndex)));
+            typeIndex++;
+            const speed = 40 + Math.random() * 20;
+            setTimeout(typeLetter, speed);
+        } else {
+            cursorEl.style.display = 'none';
+        }
+    }
+
+    let opened = false;
+    const giftBox = document.getElementById('giftBox');
+    const screen1 = document.getElementById('screen1');
+    const screen2 = document.getElementById('screen2');
+    const popupOverlay = document.getElementById('popupOverlay');
+    const closeBtn = document.getElementById('closeBtn');
+    const bouquetBtn = document.getElementById('bouquetBtn');
+
+    screen1.addEventListener('pointerdown', function (e) {
+        if (opened) return;
+        opened = true;
+        launchFirework(e.clientX || window.innerWidth/2, window.innerHeight);
+        screen1.classList.add('hide');
+        launchConfetti();
+        setTimeout(() => {
+            screen2.classList.remove('hide');
+            screen2.classList.add('show');
+        }, 1000);
+    });
+    bouquetBtn.addEventListener('pointerdown', function (e) {
+        e.stopPropagation();
+        popupOverlay.classList.add('show');
+        if (typeIndex === 0) setTimeout(typeLetter, 400);
+    });
+    closeBtn.addEventListener('pointerdown', function (e) {
+        e.stopPropagation();
+        popupOverlay.classList.remove('show');
+    });
+    popupOverlay.addEventListener('pointerdown', function (e) {
+        if (e.target === popupOverlay) popupOverlay.classList.remove('show');
+    });
+</script>
+</body>
+</html>
